@@ -137,7 +137,7 @@ namespace MathSkillsTrainer.ViewModels
         private async void OnSignUpCommandExecuteAsync(object p)
         {
             RegistrationStatusMessage = "";
-            await Task.Delay(150);//15 sec
+            await Task.Delay(150);
 
             RegistrationStatusMessage = _userService.CreateUserOrGetErrorMessage(_fullName, _email, _username, _password);
             await Task.Delay(15000);//15 sec

@@ -18,6 +18,5 @@ namespace MathSkillsTrainer.Data.Interfaces
 
         // Метод для проверки учетных данных
         Task<User> AuthenticateAsync(string username, string passwordHash);
-        //void InitializePredefinedUsers();
     }
 }

@@ -70,57 +70,18 @@ namespace MathSkillsTrainer.Services
 
         public async Task<string> AuthenticateOrGetErrorAsync(string username, string password)
         {
-            User user = await _userRepository.GetUserByUsernameAsync(username);
-
-            string error = CheckUser(user, password);
-
-            if (string.IsNullOrEmpty(error))
+            if (_userRepository.AuthenticateAsync(username, password).Result == null)
             {
-                _failedLoginAttempts = 0;
-                _navigationService.ChangeWindowTo<MainWindow>();
+                IncrementFailedAttempts();
+                return "Неверный логин или пароль.";
             }
-            return error;
-        }
 
-        #region Методы проверок
-
-        private string CheckUser(User user, string currentPassword)
-        {
-            switch (user)
-            {
-                case null:
-                    IncrementFailedAttempts(out isWillLocked);
-                    if (isWillLocked)
-                    {
-                        return "Израсходаваны попытки входа. Система заблокированна на 15 секунд";
-                    }
-                    return $"Данный пользователь не существует или введён неверно! (попыток осаталось: {3 - _failedLoginAttempts})";
-                default:
-                    return CheckPassword(user, currentPassword);
-            }
-        }
-
-        private string CheckPassword(User user, string currentPassword)
-        {
-            bool isPasswordCorrect = PasswordHasher.VerifyPassword(currentPassword, user.PasswordHash);
-            if (isPasswordCorrect)
-            {
-                _navigationService.ChangeWindowTo<MainWindow>();
-            }
-            else if (!isPasswordCorrect)
-            {
-                IncrementFailedAttempts(out isWillLocked);
-                if (isWillLocked) 
-                {
-                    return "Израсходаваны попытки входа. Система заблокированна на 15 секунд";
-                }
-                return $"Не верный пароль! (попыток осаталось: {3 - _failedLoginAttempts})";
-            }
+            _failedLoginAttempts = 0;
+            _navigationService.ChangeWindowTo<MainWindow>();
             return null;
         }
-        #endregion
 
-        #region Методы блокировок
+        #region Методы блокировки окна
 
         private async Task LockWindowAsync(int seconds)
         {
@@ -130,14 +91,12 @@ namespace MathSkillsTrainer.Services
             _failedLoginAttempts = 0;
         }
 
-        private void IncrementFailedAttempts(out bool isWillLocked)
+        private void IncrementFailedAttempts()
         {
-            isWillLocked = false;
             _failedLoginAttempts++;
 
             if (_failedLoginAttempts >= 3)
             {
-                isWillLocked = true;
                 _ = LockWindowAsync(15);
             }
         }

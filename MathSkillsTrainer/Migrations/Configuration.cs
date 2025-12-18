@@ -48,6 +48,13 @@ namespace MathSkillsTrainer.Migrations
                         SystemName = "User",
                         DisplayName = "Пользователь",
                         Description = "Стандартный пользователь системы."
+                    },
+
+                    new Role
+                    {
+                        SystemName = "Guest",
+                        DisplayName = "Гость",
+                        Description = "Пользователь системы с правами только на просмотр некоторых данных."
                     }
                 );
 

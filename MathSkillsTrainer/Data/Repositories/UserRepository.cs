@@ -63,45 +63,6 @@ namespace MathSkillsTrainer.Data.Repositories
             }
         }
 
-        /// <summary>
-        /// Метод для создания предопределенных ролей при первом запуске приложения/миграции.
-        /// </summary>
-        //public void InitializePredefinedUsers()
-        //{
-        //    if (!_context.Users.Any())
-        //    {
-        //        var users = new List<User>
-        //        {
-        //            new User { Username = "Admin",
-        //                       PasswordHash = PasswordHasher.HashPassword("1"),
-        //                       FullName = "Майская Мирослава Андреевна",
-        //                       Email = "may@mail.ru",
-        //                       RoleId = 1},
-
-        //            new User { Username = "Manager",
-        //                       PasswordHash = PasswordHasher.HashPassword("123"),
-        //                       FullName = "Пахомов Ярослав Константинович",
-        //                       Email = "Pahomov@yandex.ru",
-        //                       RoleId = 2},
-
-        //            new User { Username = "User",
-        //                       PasswordHash = PasswordHasher.HashPassword("123"),
-        //                       FullName = "Чундышко Адам Юнусович",
-        //                       Email = "CHAU@google.com",
-        //                       RoleId = 3},
-
-        //            new User { Username = "guest",
-        //                       PasswordHash = PasswordHasher.HashPassword("123"),
-        //                       FullName = "Леонова Дарья Дмитриевна",
-        //                       Email = "Lion@ya.ru",
-        //                       RoleId = 4}
-        //        };
-
-        //        _context.Users.AddRange(users);
-        //        _context.SaveChanges();
-        //    }
-        //}
-
         public async Task<User> AuthenticateAsync(string username, string providedPassword)
         {
             var user = await _context.Users

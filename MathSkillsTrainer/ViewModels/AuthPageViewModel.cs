@@ -190,6 +190,9 @@ namespace MathSkillsTrainer.ViewModels
 
         private async void OnSignInCommandExecuteAsync(object p)
         {
+            AuthStatusMessage = "";
+            await Task.Delay(150);
+
             AuthStatusMessage = await _authService.AuthenticateOrGetErrorAsync(_username, _password);
             await Task.Delay(15000);//15 sec
             AuthStatusMessage = "";
