@@ -11,7 +11,7 @@ namespace MathSkillsTrainer.Data
 {
     public class MathSkillsTrainerDbContext : DbContext
     {
-        // Свойства DbSet делаем публичными для доступа из других частей приложения
+        // Свойства DbSet для доступа из других частей приложения
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
 
@@ -22,7 +22,7 @@ namespace MathSkillsTrainer.Data
 
         private static SQLiteConnection GetConnection()
         {
-            // Строка подключения из вашего App.config
+            // Строка подключения из App.config
             string connectionString = "Data Source=|DataDirectory|\\MathSkillsTrainer.db; Pooling=true; Max Pool Size=100; FailIfMissing=False";
 
             var connection = new SQLiteConnection(connectionString);

@@ -23,7 +23,7 @@ namespace MathSkillsTrainer.Migrations
             SetSqlGenerator("System.Data.SQLite", new SQLiteMigrationSqlGenerator());
         }
 
-        protected override void Seed(MathSkillsTrainer.Data.MathSkillsTrainerDbContext context)
+        protected override void Seed(MathSkillsTrainerDbContext context)
         {
             if (!context.Roles.Any())
             {
@@ -40,7 +40,7 @@ namespace MathSkillsTrainer.Migrations
                     {
                         SystemName = "Operator",
                         DisplayName = "Оператор",
-                        Description = "Доступ к основным рабочим функциям (обработке заказов/данных)."
+                        Description = "Доступ к основным рабочим функциям (правка текста и прочего)."
                     },
 
                     new Role
@@ -48,13 +48,6 @@ namespace MathSkillsTrainer.Migrations
                         SystemName = "User",
                         DisplayName = "Пользователь",
                         Description = "Стандартный пользователь системы."
-                    },
-
-                    new Role
-                    {
-                        SystemName = "Guest",
-                        DisplayName = "Гость",
-                        Description = "Минимальные права (просмотр публичной информации)."
                     }
                 );
 
@@ -65,8 +58,6 @@ namespace MathSkillsTrainer.Migrations
             {
                 var adminRoleId = context.Roles.Single(r => r.SystemName == "Admin").RoleId;
                 var operatorRoleId = context.Roles.Single(r => r.SystemName == "Operator").RoleId;
-                var userRoleId = context.Roles.Single(r => r.SystemName == "User").RoleId;
-                var guestRoleId = context.Roles.Single(r => r.SystemName == "Guest").RoleId;
 
                 context.Users.AddOrUpdate(
                     u => u.Username,
@@ -80,19 +71,7 @@ namespace MathSkillsTrainer.Migrations
                                PasswordHash = PasswordHasher.HashPassword("123"),
                                FullName = "Пахомов Ярослав Константинович",
                                Email = "Pahomov@yandex.ru",
-                               RoleId = operatorRoleId},
-
-                    new User { Username = "User",
-                               PasswordHash = PasswordHasher.HashPassword("123"),
-                               FullName = "Чундышко Адам Юнусович",
-                               Email = "CHAU@google.com",
-                               RoleId = userRoleId},
-
-                    new User { Username = "guest",
-                               PasswordHash = PasswordHasher.HashPassword("123"),
-                               FullName = "Леонова Дарья Дмитриевна",
-                               Email = "Lion@ya.ru",
-                               RoleId = guestRoleId}
+                               RoleId = operatorRoleId}
                 );
 
                 context.SaveChanges();

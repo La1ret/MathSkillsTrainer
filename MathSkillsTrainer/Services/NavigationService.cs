@@ -1,34 +1,39 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MathSkillsTrainer.Services.Interfaces;
+using MathSkillsTrainer.Views.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using MathSkillsTrainer.Services.Interfaces;
-using MathSkillsTrainer.Views.Windows;
+using System.Windows.Controls;
 
 namespace MathSkillsTrainer.Services
 {
     internal class NavigationService : INavigationService
     {
-        private readonly IServiceProvider _serviceProvider;
+        #region Объявление сервисов и фреймов
+
+        private readonly IServiceProvider _serviceProvider; 
+        private Frame _frame;
+        #endregion
+
+        #region Инициализатор
 
         public NavigationService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
+        #endregion
 
-        public void NavigateToMain()
-        {
-            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
-        }
+        public void SetFrame(Frame frame) => _frame = frame;
 
-        public void NavigateToAuthorization()
+        public void NavigateToPage<NextPage>() 
+            where NextPage : Page
         {
-            var authWindow = _serviceProvider.GetRequiredService<Authorization>();
-            authWindow.Show();
+            var page = _serviceProvider.GetRequiredService<NextPage>();
+            _frame?.Navigate(page);
         }
 
         public void CloseWindow(Window windowToClose)
@@ -37,6 +42,17 @@ namespace MathSkillsTrainer.Services
             {
                 windowToClose.Close();
             }
+        }
+
+        public void ChangeWindowTo<NextWindow>()
+             where NextWindow : Window
+        {
+            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
+
+            var newWindow = _serviceProvider.GetRequiredService<NextWindow>();
+                
+            currentWindow.Close();
+            newWindow.Show();
         }
     }
 }

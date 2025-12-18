@@ -14,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MathSkillsTrainer.Views.Windows
+namespace MathSkillsTrainer.Views.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для AuthPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AuthPage : Page
     {
-        public MainWindow(MainWindowViewModel viewModel)
+        public AuthPage(AuthPageViewModel viewModel)
         {
             InitializeComponent();
 

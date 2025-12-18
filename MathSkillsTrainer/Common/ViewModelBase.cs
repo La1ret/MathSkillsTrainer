@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.Web;
 
-namespace MathSkillsTrainer.ViewModels
+namespace MathSkillsTrainer.Common
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

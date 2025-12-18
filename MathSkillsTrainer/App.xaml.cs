@@ -51,34 +51,25 @@ namespace MathSkillsTrainer
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
 
-            services.AddTransient<AuthentificationService>();
-            services.AddTransient<UserService>();
+            services.AddTransient<IAuthentificationService, AuthentificationService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddSingleton<INavigationService, NavigationService>();
 
-            services.AddTransient<AuthorizationViewModel>();
-            services.AddTransient<MainWindowViewModel>();
-
+            //Views
             services.AddTransient<Views.Windows.Authorization>();
+            services.AddTransient<Views.Pages.AuthPage>();
+            services.AddTransient<Views.Pages.PasswordRecovery>();
+            services.AddTransient<Views.Pages.Registration>();
+
             services.AddTransient<Views.Windows.MainWindow>();
+
+            //ViewModels
+            services.AddTransient<AuthPageViewModel>();
+            services.AddTransient<AuthorizationViewModel>();
+            services.AddTransient<PasswordRecoveryViewModel>();
+            services.AddTransient<PegistrationViewModel>();
+
+            services.AddTransient<MainWindowViewModel>();
         }
-
-        //private void InitializeDatabaseSync()
-        //{
-        //    using (var scope = serviceProvider.CreateScope())
-        //    {
-        //        var services = scope.ServiceProvider;
-        //        var dbContext = services.GetRequiredService<MathSkillsTrainerDbContext>();
-
-                
-        //        dbContext.Database.CreateIfNotExists();
-
-
-        //        var roleRepo = services.GetRequiredService<IRoleRepository>();
-        //        roleRepo.InitializePredefinedRoles(); 
-
-        //        var userRepo = services.GetRequiredService<IUserRepository>();
-        //        userRepo.InitializePredefinedUsers();
-        //    }
-        //}
     } 
 }

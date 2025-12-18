@@ -1,5 +1,10 @@
-﻿using System;
+﻿using MathSkillsTrainer.Helpers;
+using MathSkillsTrainer.Services.Interfaces;
+using MathSkillsTrainer.ViewModels;
+using MathSkillsTrainer.Views.Pages;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +16,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using MathSkillsTrainer.Helpers;
-using MathSkillsTrainer.ViewModels;
-using MathSkillsTrainer.Services.Interfaces;
 
 namespace MathSkillsTrainer.Views.Windows
 {
@@ -22,12 +24,14 @@ namespace MathSkillsTrainer.Views.Windows
     /// </summary>
     public partial class Authorization : Window
     {
-        public Authorization(AuthorizationViewModel viewModel)
+        public Authorization(AuthorizationViewModel viewModel, INavigationService navigationService)
         {
             InitializeComponent();
-
+             
             DataContext = viewModel;
-        }
 
+            navigationService.SetFrame(this.MainFrame);
+            navigationService.NavigateToPage<AuthPage>();
+        }
     }
 }

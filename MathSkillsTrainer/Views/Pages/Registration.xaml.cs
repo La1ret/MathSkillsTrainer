@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathSkillsTrainer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,15 @@ using System.Windows.Shapes;
 namespace MathSkillsTrainer.Views.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Page2.xaml
+    /// Логика взаимодействия для Registration.xaml
     /// </summary>
-    public partial class Page2 : Page
+    public partial class Registration : Page
     {
-        public Page2()
+        public Registration(PegistrationViewModel viewModel)
         {
             InitializeComponent();
+
+            DataContext = viewModel;
         }
     }
 }
