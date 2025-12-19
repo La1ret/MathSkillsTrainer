@@ -15,6 +15,8 @@ namespace MathSkillsTrainer.Services.Interfaces
     public interface IAuthentificationService: INotifyPropertyChanged
     {
         bool IsLocked { get; }
-        Task<string> AuthenticateOrGetErrorAsync(string username, string password);
+        Task<OperationResult> AuthenticateAsync(string username, string password); 
+        Task<OperationResult> RegisterAsync(string fullName, string email, string username, string password);
+        Task<OperationResult> RequestPasswordRecoveryAsync(string username, string email);
     }
 }

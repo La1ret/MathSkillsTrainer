@@ -8,6 +8,6 @@ namespace MathSkillsTrainer.Services.Interfaces
 {
     public interface IUserService
     {
-        string CreateUserOrGetErrorMessage(string fullName, string email, string username, string password);
+        //Task<string> CreateUserOrGetErrorMessageAsync(string fullName, string email, string username, string password);
     }
 }

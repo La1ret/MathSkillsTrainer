@@ -19,6 +19,7 @@ namespace MathSkillsTrainer.ViewModels
 
         private readonly INavigationService _navigationService;
         private readonly IUserService _userService;
+        private readonly IAuthentificationService _authService;
         #endregion
 
         #region Объявление команд
@@ -47,14 +48,16 @@ namespace MathSkillsTrainer.ViewModels
 
         #region Инициализация
 
-        public PegistrationViewModel(INavigationService navigationService, IUserService userService/*, ...*/)
+        public PegistrationViewModel(INavigationService navigationService, IUserService userService, IAuthentificationService authService)
         {
             _navigationService = navigationService;
             _userService = userService;
+            _authService = authService;
 
             BackCommand = new RelayCommand(OnBackCommandExecute);
             SignUpCommand = new RelayCommand(OnSignUpCommandExecuteAsync, CanSignUpCommandExecute);
             ChangePasswordVisibility = new RelayCommand(OnChangePasswordVisibilityExecute);
+            _authService = authService;
         }
         #endregion
 
@@ -137,10 +140,19 @@ namespace MathSkillsTrainer.ViewModels
         private async void OnSignUpCommandExecuteAsync(object p)
         {
             RegistrationStatusMessage = "";
-            await Task.Delay(150);
+            await Task.Delay(150); //Для заметности отображения смены сообщения
 
-            RegistrationStatusMessage = _userService.CreateUserOrGetErrorMessage(_fullName, _email, _username, _password);
-            await Task.Delay(15000);//15 sec
+            var result = await _authService.RegisterAsync(_fullName, _email, _username, _password);
+            if (result.IsSuccess)
+            {
+                RegistrationStatusMessage = "Производится вход в систему...";
+            }
+            else 
+            {
+                RegistrationStatusMessage = result.Message;
+            }
+            
+            await Task.Delay(15000); //Затирка сообщения через 15 секунд
             RegistrationStatusMessage = "";
         }
 

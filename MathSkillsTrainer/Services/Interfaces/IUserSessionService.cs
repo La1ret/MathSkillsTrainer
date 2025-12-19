@@ -10,7 +10,7 @@ namespace MathSkillsTrainer.Services.Interfaces
 {
     public interface IUserSessionService
     {
-        User CurrentUser { get; }
+        User CurrentUser { get; set; }
         void StartSession(User user);
         void CreateGuestSession(); 
     }

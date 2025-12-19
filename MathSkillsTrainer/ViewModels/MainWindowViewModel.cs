@@ -1,35 +1,31 @@
 ﻿using MathSkillsTrainer.Common;
 using MathSkillsTrainer.Data.Interfaces;
 using MathSkillsTrainer.Data.Repositories;
+using MathSkillsTrainer.Services.Interfaces;
+using MathSkillsTrainer.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MathSkillsTrainer.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly IUserRepository _userRepository;
-        #region Заголовок окна
+        private readonly INavigationService _navigationService;
 
-        private string _Title = "Торгове аппараты";
+        public ICommand BackToAuthCommand { get; }
 
-        /// <summary>Заголовок окна</summary>
-        public string Title
-        {
-            get => _Title;
-            set => Set(ref _Title, value);
-        }
-
-        #endregion
-
-        public MainWindowViewModel(IUserRepository userRepository)
+        public MainWindowViewModel(IUserRepository userRepository, INavigationService navigationService)
         {
             _userRepository = userRepository;
+            _navigationService = navigationService;
 
             GetUsernameList();
+            BackToAuthCommand = new RelayCommand(OnBackToAuthCommandExecute);
         }
         private async void GetUsernameList() 
         {
@@ -47,6 +43,11 @@ namespace MathSkillsTrainer.ViewModels
         {
             get => usernameList.ToString();
             set => usernameList.ToString();
+        }
+
+        private void OnBackToAuthCommandExecute(object p) 
+        {
+            _navigationService.ChangeWindowTo<Authorization>();
         }
     }
 }

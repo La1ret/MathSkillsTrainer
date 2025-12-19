@@ -16,54 +16,26 @@ namespace MathSkillsTrainer.Services
     {
         #region Объявление сервисов и контекста
         
-        private readonly IServiceProvider _serviceProvider;
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly INavigationService _navigationService;
+        private readonly IUserSessionService _userSessionService;
         #endregion
 
         #region Инициализатор
 
-        public UserService(IServiceProvider serviceProvider, IUserRepository userRepository, IRoleRepository roleRepository, INavigationService navigationService)
+        public UserService( IUserRepository userRepository, 
+                            IRoleRepository roleRepository, 
+                            INavigationService navigationService, 
+                            IUserSessionService userSessionService)
         {
-            _serviceProvider = serviceProvider;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _navigationService = navigationService;
+            _userSessionService = userSessionService;
         }
         #endregion
 
-        public string CreateUserOrGetErrorMessage(string fullName, string email, string username, string password) 
-        {
-            bool isFullName = fullName.Split().Count() >= 2 && fullName.Split().Count() < 4 ? true : false;
-
-            if (!isFullName) 
-            {
-                return "Вы некорректно ввели ФИО регистрация не возможна";
-            }
-
-            if (_userRepository.GetUserByUsernameAsync(username).Result == null)
-            {
-                var passwordHash = PasswordHasher.HashPassword(password);
-
-                var ф = _roleRepository.GetRoleBySystemNameAsync("User").Result.RoleId;
-
-                User user = new User
-                {
-                    FullName = fullName,
-                    Email = email,
-                    Username = username,
-                    PasswordHash = passwordHash,
-                    RoleId = _roleRepository.GetRoleBySystemNameAsync("User").Result.RoleId
-                };
-
-                _userRepository.AddUserAsync(user);
-
-                _navigationService.ChangeWindowTo<MainWindow>(); 
-                return null;
-            }
-
-            else return "Пользователь с таким логином уже существует. Выберете другой";
-        }
+       
     }
 }

@@ -174,19 +174,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\OperationResult.cs" />
     <Compile Include="Common\PasswordHasher.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Data\Interfaces\IRoleRepository.cs" />
     <Compile Include="Data\Interfaces\IUserRepository.cs" />
     <Compile Include="Data\Repositories\RoleRepository.cs" />
     <Compile Include="Data\Repositories\UserRepository.cs" />
-    <Compile Include="Helpers\PasswordBoxHelper.cs" />
+    <Compile Include="Common\Helpers\PasswordBoxHelper.cs" />
     <Compile Include="Data\MathSkillsTrainerDbContext.cs" />
-    <Compile Include="Migrations\202512141629217_InitialSchema.cs" />
-    <Compile Include="Migrations\202512141629217_InitialSchema.Designer.cs">
+    <Compile Include="Data\Migrations\202512141629217_InitialSchema.cs" />
+    <Compile Include="Data\Migrations\202512141629217_InitialSchema.Designer.cs">
       <DependentUpon>202512141629217_InitialSchema.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AuthentificationService.cs" />
@@ -270,7 +271,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202512141629217_InitialSchema.resx">
+    <EmbeddedResource Include="Data\Migrations\202512141629217_InitialSchema.resx">
       <DependentUpon>202512141629217_InitialSchema.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -54,6 +54,7 @@ namespace MathSkillsTrainer
             services.AddTransient<IAuthentificationService, AuthentificationService>();
             services.AddTransient<IUserService, UserService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<IUserSessionService, UserSessionService>();
 
             //Views
             services.AddTransient<Views.Windows.Authorization>();

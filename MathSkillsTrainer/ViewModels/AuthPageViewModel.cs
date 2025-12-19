@@ -191,10 +191,20 @@ namespace MathSkillsTrainer.ViewModels
         private async void OnSignInCommandExecuteAsync(object p)
         {
             AuthStatusMessage = "";
-            await Task.Delay(150);
+            await Task.Delay(150); //Для того чтоб пользователь видел что сообщение сменилось (если на такое же)
 
-            AuthStatusMessage = await _authService.AuthenticateOrGetErrorAsync(_username, _password);
-            await Task.Delay(15000);//15 sec
+            var result = await _authService.AuthenticateAsync(_username, _password);
+            if (result.IsSuccess) 
+            {
+                AuthStatusMessage = "Производится вход в систему...";
+            }
+            else
+            {
+                AuthStatusMessage = result.Message;
+            }
+            
+            //Затирание текста через 15 сек
+            await Task.Delay(15000);//15 сек
             AuthStatusMessage = "";
         }
 
